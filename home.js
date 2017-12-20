@@ -27,7 +27,9 @@ var  users = {
     'bbc':'321',
     'cba':'987'
 }
+
 server.get("/login",function (req,res) {
+    //http://localhost:8080/login?a=2&w=0&u=1010
     M.log(req.query);
     var name = req.query.name;
     var pass = req.query.pass;
@@ -45,22 +47,35 @@ server.get("/login",function (req,res) {
 server.use(express.static(__dirname+"/www"));  //换内置静态资源处理的方法
 
 //不推荐写法
-server.get("/study",function (req,res) {
-    M.log("有get");
-    res.send("get");
-    res.end();
-});
-server.post("/",function (req,res) {
-    M.log("有post");
-    res.send("post");
-    res.end("post");
-});
+// server.get("/study",function (req,res) {
+//     M.log("有get");
+//     res.send("get");
+//     res.end();
+// });
+// server.post("/",function (req,res) {
+//     M.log("有post");
+//     res.send("post");
+//     res.end("post");
+// });
 // server.use('/',function (req,res) {
 //    res.send({a:1,b:2});
 //    res.end();
 // });
 
 
-//中间件
+const cookieparser = require('cookie-parser');
+server.use(cookieparser());//解析cookie中间件
+
+server.use('/testCookie',function(req,res){
+    // res.cookie('user','bule');//发送cookie
+    req.secret = 'ckjsdnkjznj';//签名
+    res.cookie('user','bule',{signed:true});//发送cookie
+    //blue-->s%3Abule.qtRXpz3FtyaFJZUaewuW0wp96meKAh0iaviGefzIpB0
+    res.send('ok');
+    
+});
+server.use('/',function(req,res){
+    console.log(req.cookies);//接受cookie
+});
 
 
