@@ -1,0 +1,12 @@
+*.log
+*.patch
+.DS_Store
+.vscode
+
+.idea/
+.svn/
+node_modules/
+public/assets/
+views_dev/
+npm-debug.log
+.aliossaccess

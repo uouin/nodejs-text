@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+</body>
+<!--<script src="./js/ajax.js"></script>-->
+<script>
+    var prenc = 0.1;
+
+    // setTimeout($('.next-button,.go-button').ontap(e => {
+    setTimeout($('.next-button,.go-button,.arrow').ontap(e => {
+        prenc += 0.1;
+    updatePositionTime(prenc);
+
+    // window.swipeUp();
+    // try {
+    //   const imgParam = {
+    //     images: ['http://static.seeyouyima.com/ad-activity.meiyou.com/car.3aca65e16abaab470bc97b900bea3bb9.png',
+    //       'http://static.seeyouyima.com/ad-activity.meiyou.com/golf_1.b99edf456f7c2875080628ddcebee0d6.webp'
+    //     ]
+    //   };
+
+    //   jsbridge.wait('album/save', imgParam, function (data) {
+    //     console.log(data);
+    //     log(data);
+    //   });
+    // } catch (err) {
+    //   console.error(err);
+    // }
+    }), 500);
+    function updatePositionTime(percent) {
+        // 时间显示
+        // const ms = mzcSound.duration * percent;
+        const fullWidth = parseFloat($('#mzc_bar').width());
+        // let s = parseInt(ms / 1000 % 60, 10);
+        // let m = parseInt(ms / 1000 / 60, 10);
+
+        // if (!s) {
+        //   s = 0;
+        // }
+        // if (!m) {
+        //   m = 0;
+        // }
+
+        // if ((m + '').length < 2) {
+        //   m = '0' + m;
+        // }
+        // if ((s + '').length < 2) {
+        //   s = '0' + s;
+        // }
+        // $('#mzc_position').html(m + ':' + s);
+        $('#mzc_percent').width(percent * fullWidth);
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

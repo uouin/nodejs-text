@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,body
+    {
+      height: 100%;
+      overflow: hidden;
+    }
+    body,div,h2{
+      margin: 0;
+      padding: 0;
+    }
+    center{
+      padding-top: 10px;
+    }
+    button{
+      cursor: pointer;
+    }
+    #outer{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0.5;
+      filter:alpha(opacity=50);
+      display: none;
+    }
+    #windows{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 200px;
+      background: #fff;
+      border: 4px solid #F90;
+      margin: -102px 0 0 -202px;
+      display: none;
+    }
+    h2{
+      text-align: right;
+      background: #FC0;
+      border-bottom: 3px solid #F90;
+      /*  padding: 5px;*/
+    }
+    h2 span{
+      color: #F90;
+      cursor: pointer;
+      background: #FFF;
+      border: 1px solid #F90;
+      padding: 0 2px;
+    }
+    p{
+      text-align: justify;
+      text-indent: 2em;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="content">
+  <div id="outer">
+  </div>
+  <div id="windows">
+    <h2>title<span id="close">*</span></h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt optio ullam asperiores, quia modi tenetur, blanditiis, debitis dolore voluptatem tempora excepturi accusantium. Ducimus blanditiis fugiat dolor, officia consequatur provident illo!</p>
+  </div>
+</div>
+  <!--<center><button>弹出层</button></center>-->
+
+</body>
+<script src="./js/ajax.js"></script>
+<script>
+
+      var txtUser = document.getElementById("user");
+      var txtPass = document.getElementById("pass");
+      var Reg_btn = document.getElementById("reg_btn");
+      var logi_btn = document.getElementById("logi_btn");
+      var all_btn = document.getElementById("all_btn");
+
+      write_btn.onclick = function () {
+          var arrDisplay = "好好说话";
+          //存储，IE6~7 cookie 其他浏览器HTML5本地存储
+          if (window.localStorage) {
+              localStorage.setItem("menuTitle", arrDisplay);
+          } else {
+              Cookie.write("menuTitle", arrDisplay);
+          }
+      }
+      read_btn.onclick = function () {
+          var ptext = document.getElementById("locap");
+          ptext.innerText  = window.localStorage? localStorage.getItem("menuTitle"): Cookie.read("menuTitle");	;
+      }
+      Reg_btn.onclick = function () {
+          ajax({
+              url : '/user',
+              data : {act:'reg',user:txtUser.value,pass:txtPass.value},
+              type:'get',
+              success:function (str) {
+                  var json = eval('('+str+')');
+                  if(json.ok){
+                      alert(json.msg);
+                  }else {
+                      alert("注册失败:"+json.msg);
+                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+      }
+      logi_btn.onclick = function () {
+          ajax({
+              url : '/user',
+              data : {act:'login',user:txtUser.value,pass:txtPass.value},
+              type:'get',
+              success:function (str) {
+//                  console.log(str);
+                  var json = eval('('+str+')');
+                  if(json.ok){
+                      alert(json.msg);
+                  }else {
+                      alert("登陆失败:"+json.msg);
+                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+      }
+      all_btn.onclick=function () {
+          ajax({
+              url : '/user',
+              data : {act:'all'},
+              type:'get',
+              success:function (str) {
+                  console.log(str);
+//                  var json = eval('('+str+')');
+//                  if(json.ok){
+//                      console.log(json.msg);
+//                  }else {
+//                      console.log(str);
+//                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+          console.log();
+      }
+  };
+</script>
+</html>

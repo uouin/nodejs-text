@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=370,maximum-scale=2,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+     a{ text-decoration: none; color: #333}
+ 
+     .content{
+        width: 1000px;
+        margin:100px auto;
+        background:white;
+        box-shadow: 3px 3px 10px rgba(200,200,200,0.3);
+        padding:0 40px 40px;
+     }
+     .content h1{
+       text-align: center;
+       font-size:40px;
+       color: orange;
+       margin-bottom: 20px;
+     }
+ 
+     .content input,textarea{
+        color: #333;
+        list-style-position: inside;
+        border-bottom: 1px dashed #999;
+        transition: 0.5s;
+        width: 15rem;
+        border-radius: 5px;
+        border-style: hidden;
+        border: 1px solid #000;
+ 
+     }
+     .content ol li:hover{
+       background: #eee;
+     }
+     form{
+       /*display: none;*/
+     }
+	 
+
+ 
+  </style>
+</head>
+<body>
+
+
+<div class="content">
+  <input type="button" class="boo" value="存入" id="write_btn"/>
+  <input type="button"  value="读出" id="read_btn"/>
+  <p id="locap"></p>
+
+  <form action="/login" method="get">
+    姓名:<input type="text" name="name"/><br><br>
+    密码:<input type="text" name="pass"/><br><br>
+    <input type="submit"  value="提交"/><br>
+    文本:<textarea name="conn" rows="7" cols="30"></textarea><br><br>
+  </form>
+  <!--<form action="study.html" method="post">-->
+  <input type="file" accept="image/*" multiple>
+  <input type="file" accept="image/*" capture="camera">
+  <input type="file" accept="video/*" capture="camcorder">
+  <input type="file" accept="audio/*" capture="microphone">
+
+  <br><br>
+  姓名:<input type="text" id="user"/><br><br>
+  密码:<input type="text" id="pass"/><br><br>
+  <input type="button"  value="注册" id="reg_btn"/>
+  <input type="button"  value="登陆" id="logi_btn"/>
+  <input type="button"  value="全部" id="all_btn"/>
+  <br>
+
+</div>
+ 
+ 
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/ajax.js"></script>
+<script type="text/javascript" color="214,38,38" opacity='1' zIndex="-1" count="99"  src="./js/canvas-nest.js"></script>
+
+<script>
+
+      var txtUser = document.getElementById("user");
+      var txtPass = document.getElementById("pass");
+      var Reg_btn = document.getElementById("reg_btn");
+      var logi_btn = document.getElementById("logi_btn");
+      var all_btn = document.getElementById("all_btn");
+
+      write_btn.onclick = function () {
+          var arrDisplay = "好好说话";
+          //存储，IE6~7 cookie 其他浏览器HTML5本地存储
+          if (window.localStorage) {
+              localStorage.setItem("menuTitle", arrDisplay);
+          } else {
+              Cookie.write("menuTitle", arrDisplay);
+          }
+      }
+      read_btn.onclick = function () {
+          var ptext = document.getElementById("locap");
+          ptext.innerText  = window.localStorage? localStorage.getItem("menuTitle"): Cookie.read("menuTitle");	;
+      }
+      Reg_btn.onclick = function () {
+          ajax({
+              url : '/user',
+              data : {act:'reg',user:txtUser.value,pass:txtPass.value},
+              type:'get',
+              success:function (str) {
+                  var json = eval('('+str+')');
+                  if(json.ok){
+                      alert(json.msg);
+                  }else {
+                      alert("注册失败:"+json.msg);
+                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+      }
+      logi_btn.onclick = function () {
+          ajax({
+              url : '/user',
+              data : {act:'login',user:txtUser.value,pass:txtPass.value},
+              type:'get',
+              success:function (str) {
+//                  console.log(str);
+                  var json = eval('('+str+')');
+                  if(json.ok){
+                      alert(json.msg);
+                  }else {
+                      alert("登陆失败:"+json.msg);
+                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+      }
+      all_btn.onclick=function () {
+          ajax({
+              url : '/user',
+              data : {act:'all'},
+              type:'get',
+              success:function (str) {
+                  console.log(str);
+//                  var json = eval('('+str+')');
+//                  if(json.ok){
+//                      console.log(json.msg);
+//                  }else {
+//                      console.log(str);
+//                  }
+              },
+              error:function () {
+                  alert("网络出错");
+              }
+          })
+          console.log();
+      }
+ 
+</script>
+</html>
